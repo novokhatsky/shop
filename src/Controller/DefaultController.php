@@ -8,14 +8,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
-    public function index(Request $request): Response
+    public function index(\Doctrine\ORM\EntityManagerInterface $en, Request $request): Response
     {
+        $cr = $en->getRepository('App:Category');
 
-        $name = $request->query->get('name', 'Unknow');
+        $categories = $cr->findAll();
 
         return $this->render('default/index.html.twig', [
-            'name' => $name,
+            'categories' => $categories,
         ]);
     }
+    
+    public function category(int $id, \Doctrine\ORM\EntityManagerInterface $en)
+    {
+        $category = $en->getRepository('App:Category')->find($id);
+
+        return $this->render('default/category.html.twig', [
+            'category' => $category,
+        ]);
+    }
+
 }
 

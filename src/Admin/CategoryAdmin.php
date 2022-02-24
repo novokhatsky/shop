@@ -41,6 +41,8 @@ final class CategoryAdmin extends AbstractAdmin
             // этот элемент не отображаем
             //->add('id')
             ->add('name')
+            ->add('active')
+            ->add('Parent')
             ;
     }
 
